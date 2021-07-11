@@ -101,6 +101,9 @@ public class Scanner {
 			if (match('/')) {
 				//a comment goes till end of line
 				while (peek() != '\n' && !isAtEnd()) advance();
+			} else if (match('*')) {
+				// definition for block comments
+				block();
 			} else {
 				addToken(SLASH);
 			}
@@ -124,6 +127,11 @@ public class Scanner {
 			}
 			break;
 		}
+	}
+	
+	private void block() {
+		while (peek() != '*' && peekNext() != '/' && !isAtEnd()) advance();
+			
 	}
 	
 	private void identifier() {
